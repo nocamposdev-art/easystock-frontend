@@ -142,7 +142,7 @@ function StockPage() {
     const stockMinimo = Number(params.row.stock_Minimo); // Asegurarse que este valor viene desde backend
 
     // Para depurar (solo si querés ver los valores)
-    console.log('Stock actual:', stockActual, 'Mínimo:', stockMinimo);
+    //console.log('Stock actual:', stockActual, 'Mínimo:', stockMinimo);
 
     let color = 'black';
     if (stockActual < stockMinimo) {
