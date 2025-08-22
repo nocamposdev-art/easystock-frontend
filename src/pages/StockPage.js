@@ -39,13 +39,13 @@ function StockPage() {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // pantalla <600px
-
+   const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:58835/api';
   const fetchStock = async () => {
     let idSucursalConsulta = rol === 'Admin' ? sucursalSeleccionada : usuario.sucursalId;
     let sectorConsulta = rol === 'Admin' ? sectorSeleccionado : (rol === 'Superv' ? (sectorSeleccionado || usuario.sector) : usuario.sector);
 
     const response = await fetch(
-      `http://localhost:58835/api/productos/listar?idSucursal=${idSucursalConsulta}&sector=${sectorConsulta}`
+      `${baseURL}/productos/listar?idSucursal=${idSucursalConsulta}&sector=${sectorConsulta}`
     );
     if (!response.ok) throw new Error('Error al obtener productos');
     const data = await response.json();
@@ -55,8 +55,8 @@ function StockPage() {
   const fetchCategorias = async (sector) => {
     try {
       const url = sector
-        ? `http://localhost:58835/api/productos/categoria?sector=${encodeURIComponent(sector)}`
-        : `http://localhost:58835/api/productos/categoria`;
+        ? `${baseURL}/productos/categoria?sector=${encodeURIComponent(sector)}`
+        : `${baseURL}/productos/categoria`;
       const response = await fetch(url);
       if (!response.ok) throw new Error('Error al obtener categorías');
       const data = await response.json();
@@ -105,7 +105,7 @@ function StockPage() {
     };
 
     try {
-      const response = await fetch('http://localhost:58835/api/stock/actualiza', {
+      const response = await fetch('${baseURL}/stock/actualiza', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+// Usa la variable de entorno o un valor por defecto para local
 const api = axios.create({
-  baseURL: 'http://localhost:58835/api', // URL base de tu backend
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:58835/api',
 });
 
 // Interceptor para agregar token JWT automáticamente

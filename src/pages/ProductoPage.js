@@ -18,8 +18,8 @@ function StockPage() {
     e.preventDefault();
 
     // Acá más adelante conectarás con tu backend vía API REST
-    console.log('Producto:', producto);
-    console.log('Cantidad:', cantidad);
+    //console.log('Producto:', producto);
+    //console.log('Cantidad:', cantidad);
 
     alert(`Stock actualizado para "${producto}" con cantidad ${cantidad}`);
 

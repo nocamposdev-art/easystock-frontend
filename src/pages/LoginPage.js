@@ -10,34 +10,38 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // 🔸 Importar el hook
+import { useAuth } from '../context/AuthContext';
 
 function LoginPage() {
   const [nombre_user, setNombreUser] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // 🔸 Obtener la función login del contexto
+  const { login } = useAuth();
+
+  // 🔹 URL base configurable para local o producción
+  const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:58835/api';
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+
     try {
-      const response = await axios.post('http://localhost:58835/api/Usuario/login', {
+      const response = await axios.post(`${baseURL}/Usuario/login`, {
         nombre: nombre_user,
         contrasena: contrasena
       });
 
       const { token, usuario } = response.data;
-      //console.log("el nombre es", nombre_user, "contraseña:", contrasena, "id sucursal: " );
 
-    // Guardar datos en localStorage si usás sesión o token
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
+      // Guardar token y usuario en localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('usuario', JSON.stringify(usuario));
 
-     login(usuario); // 🟢 ACTUALIZAMOS el contexto para que diga que está conectado
+      // Actualizar contexto de autenticación
+      login(usuario);
 
-      // Redirigir al dashboard u otra página
+      // Redirigir al StockPage
       navigate('/StockPage');
     } catch (err) {
       console.error('Error al iniciar sesión:', err);
@@ -89,4 +93,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
