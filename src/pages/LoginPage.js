@@ -42,7 +42,15 @@ function LoginPage() {
       login(usuario);
 
       // Redirigir al StockPage
-      navigate('/StockPage');
+    //  navigate('/StockPage');
+// Redirigir según el rol del usuario
+if (usuario.rol === 'Empl') {
+  navigate('/stock'); // Asegurate que esta ruta coincida con la definida en App.js
+} else {
+  navigate('/dashboard');
+}
+
+
     } catch (err) {
       console.error('Error al iniciar sesión:', err);
       setError('Nombre de usuario o contraseña incorrectos');

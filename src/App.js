@@ -8,6 +8,21 @@ import Navbar from './components/Navbar';
 import { RutaPrivada } from './components/RutaPrivada';
 
 function App() {
+  useEffect(() => {
+    const hoy = new Date().toISOString().slice(0, 10);
+    const fechaGuardada = localStorage.getItem('fechaModificacion');
+
+    if (fechaGuardada !== hoy) {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith('userModificadosHoy_')) {
+          localStorage.removeItem(key);
+        }
+      });
+      localStorage.setItem('fechaModificacion', hoy);
+    }
+  }, []);
+
+
   return (
     <Router>
       <Navbar />
